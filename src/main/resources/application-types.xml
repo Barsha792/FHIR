@@ -1,24 +1,72 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
   <types:catalog>
-    <types:type name="patient" format="json">
-      <types:shape format="weave" example="api/examples/responses/get_resource.json"><![CDATA[%dw 2.0
+    <types:type name="input" format="json">
+      <types:shape format="weave" example="api/examples/requests/post_resource.json"><![CDATA[%dw 2.0
 
-type patient = {|
+type input = {|
   resourceType: String, 
-  id: String, 
-  meta: {| lastUpdated: String |}, 
-  "type": String, 
-  link: Array<{|    relation: String,     url: String  |}>, 
-  entry: Array<{|    fullUrl: String,     resource: {|      resourceType: String,       id: String,       meta: {|        versionId: String,         lastUpdated: String,         source: String      |},       text: {|        status: String,         div: String      |},       gender: String,       birthDate: String    |},     search: {| mode: String |}  |}>
-|} {"example": "{\\\"resourceType\\\":\\\"Bundle\\\",\\\"id\\\":\\\"6f12a8e2-c256-489b-9532-364b85d554d9\\\",\\\"meta\\\":{\\\"lastUpdated\\\":\\\"2020-08-27T19:27:30.382+00:00\\\"},\\\"type\\\":\\\"searchset\\\",\\\"link\\\":[{\\\"relation\\\":\\\"self\\\",\\\"url\\\":\\\"http:\\/\\/hapi.fhir.org\\/baseR4\\/Patient?_pretty=true\\\"},{\\\"relation\\\":\\\"next\\\",\\\"url\\\":\\\"http:\\/\\/hapi.fhir.org\\/baseR4?_getpages=6f12a8e2-c256-489b-9532-364b85d554d9&_getpagesoffset=20&_count=20&_pretty=true&_bundletype=searchset\\\"}],\\\"entry\\\":[{\\\"fullUrl\\\":\\\"http:\\/\\/hapi.fhir.org\\/baseR4\\/Patient\\/1202643\\\",\\\"resource\\\":{\\\"resourceType\\\":\\\"Patient\\\",\\\"id\\\":\\\"1202643\\\",\\\"meta\\\":{\\\"versionId\\\":\\\"1\\\",\\\"lastUpdated\\\":\\\"2020-06-12T23:27:00.094+00:00\\\",\\\"source\\\":\\\"#DOK0mE1uhdFvt8TH\\\"},\\\"text\\\":{\\\"status\\\":\\\"generated\\\",\\\"div\\\":\\\"<div xmlns=\\\\\\\"http:\\/\\/www.w3.org\\/1999\\/xhtml\\\\\\\"><table class=\\\\\\\"hapiPropertyTable\\\\\\\"><tbody><tr><td>Date of birth<\\/td><td><span>13 October 1972<\\/span><\\/td><\\/tr><\\/tbody><\\/table><\\/div>\\\"},\\\"gender\\\":\\\"male\\\",\\\"birthDate\\\":\\\"1972-10-13\\\"},\\\"search\\\":{\\\"mode\\\":\\\"match\\\"}},{\\\"fullUrl\\\":\\\"http:\\/\\/hapi.fhir.org\\/baseR4\\/Patient\\/1202644\\\",\\\"resource\\\":{\\\"resourceType\\\":\\\"Patient\\\",\\\"id\\\":\\\"1202644\\\",\\\"meta\\\":{\\\"versionId\\\":\\\"1\\\",\\\"lastUpdated\\\":\\\"2020-06-12T23:27:30.110+00:00\\\",\\\"source\\\":\\\"#G0avmd2LCpxfto12\\\"},\\\"text\\\":{\\\"status\\\":\\\"generated\\\",\\\"div\\\":\\\"<div xmlns=\\\\\\\"http:\\/\\/www.w3.org\\/1999\\/xhtml\\\\\\\"><table class=\\\\\\\"hapiPropertyTable\\\\\\\"><tbody><tr><td>Date of birth<\\/td><td><span>13 October 1972<\\/span><\\/td><\\/tr><\\/tbody><\\/table><\\/div>\\\"},\\\"gender\\\":\\\"male\\\",\\\"birthDate\\\":\\\"1972-10-13\\\"},\\\"search\\\":{\\\"mode\\\":\\\"match\\\"}}]}"}
+  text: {|
+    status: String, 
+    div: String
+  |}, 
+  identifier: Array<{|    use: String,     "type": {|      coding: Array<{|        system: String,         code: String      |}>
+    |}, 
+    system: String, 
+    value: String, 
+    period: {| start: String |}, 
+    assigner: {| display: String |}
+  |}>, 
+  active: Boolean, 
+  name: Array<{|    use: String,     family: String,     given: Array<String>, 
+    period: {| end: String |}
+  |}>, 
+  telecom: Array<{|    use: String,     system: String,     value: String,     rank: Number {"typeId": "int"},     period: {| end: String |}  |}>, 
+  gender: String, 
+  birthDate: String, 
+  "_birthDate": {|
+    extension: Array<{|      url: String,       valueDateTime: String    |}>
+  |}, 
+  deceasedBoolean: Boolean, 
+  address: Array<{|    use: String,     "type": String,     text: String,     line: Array<String>, 
+    city: String, 
+    district: String, 
+    state: String, 
+    postalCode: String, 
+    period: {| start: String |}
+  |}>, 
+  contact: Array<{|    relationship: Array<{|      coding: Array<{|        system: String,         code: String      |}>
+    |}>, 
+    name: {|
+      family: String, 
+      "_family": {|
+        extension: Array<{|          url: String,           valueString: String        |}>
+      |}, 
+      given: Array<String>
+    |}, 
+    telecom: Array<{|      system: String,       value: String    |}>, 
+    address: {|
+      use: String, 
+      "type": String, 
+      line: Array<String>, 
+      city: String, 
+      district: String, 
+      state: String, 
+      postalCode: String, 
+      period: {| start: String |}
+    |}, 
+    gender: String, 
+    period: {| start: String |}
+  |}>, 
+  managingOrganization: {| reference: String |}
+|} {"example": "{\\\"resourceType\\\":\\\"Patient\\\",\\\"text\\\":{\\\"status\\\":\\\"generated\\\",\\\"div\\\":\\\"<div xmlns=\\\\\\\"http:\\/\\/www.w3.org\\/1999\\/xhtml\\\\\\\">\\\\n\\\\t\\\\t\\\\t<table>\\\\n\\\\t\\\\t\\\\t\\\\t<tbody>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t<tr>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t<td>Name<\\/td>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t<td>Peter James \\\\n              <b>Chalmers<\\/b> (&quot;Jim&quot;)\\\\n            <\\/td>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t<\\/tr>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t<tr>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t<td>Address<\\/td>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t<td>534 Erewhon, Pleasantville, Vic, 3999<\\/td>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t<\\/tr>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t<tr>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t<td>Contacts<\\/td>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t<td>Home: unknown. Work: (03) 5555 6473<\\/td>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t<\\/tr>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t<tr>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t<td>Id<\\/td>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t\\\\t<td>MRN: 12345 (Acme Healthcare)<\\/td>\\\\n\\\\t\\\\t\\\\t\\\\t\\\\t<\\/tr>\\\\n\\\\t\\\\t\\\\t\\\\t<\\/tbody>\\\\n\\\\t\\\\t\\\\t<\\/table>\\\\n\\\\t\\\\t<\\/div>\\\"},\\\"identifier\\\":[{\\\"use\\\":\\\"usual\\\",\\\"type\\\":{\\\"coding\\\":[{\\\"system\\\":\\\"http:\\/\\/terminology.hl7.org\\/CodeSystem\\/v2-0203\\\",\\\"code\\\":\\\"MR\\\"}]},\\\"system\\\":\\\"urn:oid:1.2.36.146.595.217.0.1\\\",\\\"value\\\":\\\"12345\\\",\\\"period\\\":{\\\"start\\\":\\\"2001-05-06\\\"},\\\"assigner\\\":{\\\"display\\\":\\\"Acme Healthcare\\\"}}],\\\"active\\\":true,\\\"name\\\":[{\\\"use\\\":\\\"official\\\",\\\"family\\\":\\\"Chalmers\\\",\\\"given\\\":[\\\"Peter\\\",\\\"James\\\"]},{\\\"use\\\":\\\"usual\\\",\\\"given\\\":[\\\"Jim\\\"]},{\\\"use\\\":\\\"maiden\\\",\\\"family\\\":\\\"Windsor\\\",\\\"given\\\":[\\\"Peter\\\",\\\"James\\\"],\\\"period\\\":{\\\"end\\\":\\\"2002\\\"}}],\\\"telecom\\\":[{\\\"use\\\":\\\"home\\\"},{\\\"system\\\":\\\"phone\\\",\\\"value\\\":\\\"(03) 5555 6473\\\",\\\"use\\\":\\\"work\\\",\\\"rank\\\":1},{\\\"system\\\":\\\"phone\\\",\\\"value\\\":\\\"(03) 3410 5613\\\",\\\"use\\\":\\\"mobile\\\",\\\"rank\\\":2},{\\\"system\\\":\\\"phone\\\",\\\"value\\\":\\\"(03) 5555 8834\\\",\\\"use\\\":\\\"old\\\",\\\"period\\\":{\\\"end\\\":\\\"2014\\\"}}],\\\"gender\\\":\\\"male\\\",\\\"birthDate\\\":\\\"1974-12-25\\\",\\\"_birthDate\\\":{\\\"extension\\\":[{\\\"url\\\":\\\"http:\\/\\/hl7.org\\/fhir\\/StructureDefinition\\/patient-birthTime\\\",\\\"valueDateTime\\\":\\\"1974-12-25T14:35:45-05:00\\\"}]},\\\"deceasedBoolean\\\":false,\\\"address\\\":[{\\\"use\\\":\\\"home\\\",\\\"type\\\":\\\"both\\\",\\\"text\\\":\\\"534 Erewhon St PeasantVille, Rainbow, Vic  3999\\\",\\\"line\\\":[\\\"534 Erewhon St\\\"],\\\"city\\\":\\\"PleasantVille\\\",\\\"district\\\":\\\"Rainbow\\\",\\\"state\\\":\\\"Vic\\\",\\\"postalCode\\\":\\\"3999\\\",\\\"period\\\":{\\\"start\\\":\\\"1974-12-25\\\"}}],\\\"contact\\\":[{\\\"relationship\\\":[{\\\"coding\\\":[{\\\"system\\\":\\\"http:\\/\\/terminology.hl7.org\\/CodeSystem\\/v2-0131\\\",\\\"code\\\":\\\"N\\\"}]}],\\\"name\\\":{\\\"family\\\":\\\"du March\u00E9\\\",\\\"_family\\\":{\\\"extension\\\":[{\\\"url\\\":\\\"http:\\/\\/hl7.org\\/fhir\\/StructureDefinition\\/humanname-own-prefix\\\",\\\"valueString\\\":\\\"VV\\\"}]},\\\"given\\\":[\\\"B\u00E9n\u00E9dicte\\\"]},\\\"telecom\\\":[{\\\"system\\\":\\\"phone\\\",\\\"value\\\":\\\"+33 (237) 998327\\\"}],\\\"address\\\":{\\\"use\\\":\\\"home\\\",\\\"type\\\":\\\"both\\\",\\\"line\\\":[\\\"534 Erewhon St\\\"],\\\"city\\\":\\\"PleasantVille\\\",\\\"district\\\":\\\"Rainbow\\\",\\\"state\\\":\\\"Vic\\\",\\\"postalCode\\\":\\\"3999\\\",\\\"period\\\":{\\\"start\\\":\\\"1974-12-25\\\"}},\\\"gender\\\":\\\"female\\\",\\\"period\\\":{\\\"start\\\":\\\"2012\\\"}}],\\\"managingOrganization\\\":{\\\"reference\\\":\\\"Organization\\/1\\\"}}"}
 
 ]]></types:shape>
     </types:type>
-    <types:type name="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Input-Payload" format="json">
-      <types:shape format="weave" example="weave/autogenerated/2fec884f-662f-4b1e-96cd-600ef6462497/Input-Payload.wev" autogeneratedOrigin="5c612faf-ca22-428a-a57a-86bc3d99bd4e"><![CDATA[%dw 2.0
+    <types:type name="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Input-Payload" format="json">
+      <types:shape format="weave" example="weave/autogenerated/592f3d67-efe4-4e19-87d7-73f44cbc61d5/Input-Payload.wev" autogeneratedOrigin="fb7f068e-59c6-4863-80d8-430ac6342a2d"><![CDATA[%dw 2.0
 
-type auto_2fec884f_662f_4b1e_96cd_600ef6462497_Input_Payload = {
+type auto_592f3d67_efe4_4e19_87d7_73f44cbc61d5_Input_Payload = {
   "us-core-ethinicity"?: {
     extension?: Array<{      extension?: Array<{        extension?: Array<anonymousType_4> {"description": "Additional Content defined by implementations - from Element: extension (recursive)\n"}, 
         id?: String, 
@@ -1299,10 +1347,10 @@ type anonymousType_154 = {
 
 ]]></types:shape>
     </types:type>
-    <types:type name="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Input-Attributes" format="java">
-      <types:shape format="weave" example="weave/autogenerated/2fec884f-662f-4b1e-96cd-600ef6462497/Input-Attributes.wev" autogeneratedOrigin="5c612faf-ca22-428a-a57a-86bc3d99bd4e"><![CDATA[%dw 2.0
+    <types:type name="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Input-Attributes" format="java">
+      <types:shape format="weave" example="weave/autogenerated/592f3d67-efe4-4e19-87d7-73f44cbc61d5/Input-Attributes.wev" autogeneratedOrigin="fb7f068e-59c6-4863-80d8-430ac6342a2d"><![CDATA[%dw 2.0
 
-type auto_2fec884f_662f_4b1e_96cd_600ef6462497_Input_Attributes = {|
+type auto_592f3d67_efe4_4e19_87d7_73f44cbc61d5_Input_Attributes = {|
   clientCertificate?: {|
     publicKey?: {|  |}, 
     "type"?: String, 
@@ -1328,263 +1376,74 @@ type auto_2fec884f_662f_4b1e_96cd_600ef6462497_Input_Attributes = {|
 
 ]]></types:shape>
     </types:type>
-    <types:type name="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Input-Variables-outboundHeaders" format="java">
-      <types:shape format="weave" example="weave/autogenerated/2fec884f-662f-4b1e-96cd-600ef6462497/Input-Variables-outboundHeaders.wev" autogeneratedOrigin="5c612faf-ca22-428a-a57a-86bc3d99bd4e"><![CDATA[%dw 2.0
+    <types:type name="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Input-Variables-outboundHeaders" format="java">
+      <types:shape format="weave" example="weave/autogenerated/592f3d67-efe4-4e19-87d7-73f44cbc61d5/Input-Variables-outboundHeaders.wev" autogeneratedOrigin="fb7f068e-59c6-4863-80d8-430ac6342a2d"><![CDATA[%dw 2.0
 
-type auto_2fec884f_662f_4b1e_96cd_600ef6462497_Input_Variables_outboundHeaders = {|  |}
+type auto_592f3d67_efe4_4e19_87d7_73f44cbc61d5_Input_Variables_outboundHeaders = {|  |}
 
 ]]></types:shape>
     </types:type>
-    <types:type name="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Input-Variables-httpStatus" format="java">
-      <types:shape format="raml" autogeneratedOrigin="5c612faf-ca22-428a-a57a-86bc3d99bd4e"><![CDATA[#%RAML 1.0 DataType
+    <types:type name="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Input-Variables-httpStatus" format="java">
+      <types:shape format="raml" autogeneratedOrigin="fb7f068e-59c6-4863-80d8-430ac6342a2d"><![CDATA[#%RAML 1.0 DataType
 type: string]]></types:shape>
     </types:type>
-    <types:type name="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Output-Payload" format="java">
-      <types:shape format="weave" example="weave/autogenerated/2fec884f-662f-4b1e-96cd-600ef6462497/Output-Payload.wev" autogeneratedOrigin="5c612faf-ca22-428a-a57a-86bc3d99bd4e"><![CDATA[%dw 2.0
+    <types:type name="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Output-Payload" format="java">
+      <types:shape format="weave" example="weave/autogenerated/592f3d67-efe4-4e19-87d7-73f44cbc61d5/Output-Payload.wev" autogeneratedOrigin="fb7f068e-59c6-4863-80d8-430ac6342a2d"><![CDATA[%dw 2.0
 
-type auto_2fec884f_662f_4b1e_96cd_600ef6462497_Output_Payload = Any
-
-]]></types:shape>
-    </types:type>
-    <types:type name="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Output-Attributes" format="java">
-      <types:shape format="weave" example="weave/autogenerated/2fec884f-662f-4b1e-96cd-600ef6462497/Output-Attributes.wev" autogeneratedOrigin="5c612faf-ca22-428a-a57a-86bc3d99bd4e"><![CDATA[%dw 2.0
-
-type auto_2fec884f_662f_4b1e_96cd_600ef6462497_Output_Attributes = Null
+type auto_592f3d67_efe4_4e19_87d7_73f44cbc61d5_Output_Payload = Any
 
 ]]></types:shape>
     </types:type>
-    <types:type name="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Output-Variables-outboundHeaders" format="java">
-      <types:shape format="weave" example="weave/autogenerated/2fec884f-662f-4b1e-96cd-600ef6462497/Output-Variables-outboundHeaders.wev" autogeneratedOrigin="5c612faf-ca22-428a-a57a-86bc3d99bd4e"><![CDATA[%dw 2.0
+    <types:type name="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Output-Attributes" format="java">
+      <types:shape format="weave" example="weave/autogenerated/592f3d67-efe4-4e19-87d7-73f44cbc61d5/Output-Attributes.wev" autogeneratedOrigin="fb7f068e-59c6-4863-80d8-430ac6342a2d"><![CDATA[%dw 2.0
 
-type auto_2fec884f_662f_4b1e_96cd_600ef6462497_Output_Variables_outboundHeaders = {|  |}
-
-]]></types:shape>
-    </types:type>
-    <types:type name="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Output-Variables-httpStatus" format="java">
-      <types:shape format="raml" autogeneratedOrigin="5c612faf-ca22-428a-a57a-86bc3d99bd4e"><![CDATA[#%RAML 1.0 DataType
-type: string]]></types:shape>
-    </types:type>
-    <types:type name="auto_180eb009-6971-49d1-9824-717e59d065b3_Input-Payload" format="java">
-      <types:shape format="weave" example="weave/autogenerated/180eb009-6971-49d1-9824-717e59d065b3/Input-Payload.wev" autogeneratedOrigin="0a072725-4780-4404-8fd4-2b55580a6ef8"><![CDATA[%dw 2.0
-
-type auto_180eb009_6971_49d1_9824_717e59d065b3_Input_Payload = Any
+type auto_592f3d67_efe4_4e19_87d7_73f44cbc61d5_Output_Attributes = Null
 
 ]]></types:shape>
     </types:type>
-    <types:type name="auto_180eb009-6971-49d1-9824-717e59d065b3_Input-Attributes" format="java">
-      <types:shape format="weave" example="weave/autogenerated/180eb009-6971-49d1-9824-717e59d065b3/Input-Attributes.wev" autogeneratedOrigin="0a072725-4780-4404-8fd4-2b55580a6ef8"><![CDATA[%dw 2.0
+    <types:type name="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Output-Variables-outboundHeaders" format="java">
+      <types:shape format="weave" example="weave/autogenerated/592f3d67-efe4-4e19-87d7-73f44cbc61d5/Output-Variables-outboundHeaders.wev" autogeneratedOrigin="fb7f068e-59c6-4863-80d8-430ac6342a2d"><![CDATA[%dw 2.0
 
-type auto_180eb009_6971_49d1_9824_717e59d065b3_Input_Attributes = {|
-  clientCertificate?: {|
-    publicKey?: {|  |}, 
-    "type"?: String, 
-    encoded?: Binary
-  |}, 
-  headers: {| Accept?: "application/fhir+json" | "*/*" | "application/fhir+xml" |}, 
-  listenerPath: String, 
-  method: String, 
-  queryParams: {|
-    "_id"?: String, 
-    "_content"?: String, 
-    "_lastUpdated"?: String, 
-    "_tag"?: String, 
-    "_profile"?: String, 
-    "_security"?: String, 
-    "_text"?: String, 
-    "_list"?: String, 
-    "_query"?: String, 
-    "_sort"?: String, 
-    "_count"?: String, 
-    "_include"?: Array<String> {"description": "Other resources to include in the search results that search matches point to"}, 
-    "_revinclude"?: Array<String> {"description": "Other resources to include in the search results when they refer to search matches"}, 
-    "_summary"?: String, 
-    "_contained"?: String, 
-    "_containedType"?: String, 
-    active?: String, 
-    address?: String, 
-    "address-city"?: String, 
-    "address-country"?: String, 
-    "address-postalcode"?: String, 
-    "address-state"?: String, 
-    "address-use"?: String, 
-    birthdate?: String, 
-    deathdate?: String, 
-    deceased?: String, 
-    email?: String, 
-    family?: String, 
-    gender?: String, 
-    given?: String, 
-    identifier?: String | Number, 
-    language?: String, 
-    link?: String, 
-    name?: String, 
-    organization?: String, 
-    phone?: String, 
-    phonetic?: String, 
-    telecom?: String
-  |}, 
-  queryString: String, 
-  relativePath: String, 
-  remoteAddress: String, 
-  requestPath: String, 
-  requestUri: String, 
-  scheme: String, 
-  uriParams: {|  |}, 
-  version: String, 
-  localAddress: String
-|}
+type auto_592f3d67_efe4_4e19_87d7_73f44cbc61d5_Output_Variables_outboundHeaders = {|  |}
 
 ]]></types:shape>
     </types:type>
-    <types:type name="auto_180eb009-6971-49d1-9824-717e59d065b3_Input-Variables-outboundHeaders" format="java">
-      <types:shape format="weave" example="weave/autogenerated/180eb009-6971-49d1-9824-717e59d065b3/Input-Variables-outboundHeaders.wev" autogeneratedOrigin="0a072725-4780-4404-8fd4-2b55580a6ef8"><![CDATA[%dw 2.0
-
-type auto_180eb009_6971_49d1_9824_717e59d065b3_Input_Variables_outboundHeaders = {|  |}
-
-]]></types:shape>
-    </types:type>
-    <types:type name="auto_180eb009-6971-49d1-9824-717e59d065b3_Input-Variables-httpStatus" format="java">
-      <types:shape format="raml" autogeneratedOrigin="0a072725-4780-4404-8fd4-2b55580a6ef8"><![CDATA[#%RAML 1.0 DataType
-type: string]]></types:shape>
-    </types:type>
-    <types:type name="auto_180eb009-6971-49d1-9824-717e59d065b3_Output-Payload" format="json">
-      <types:shape format="weave" example="weave/autogenerated/180eb009-6971-49d1-9824-717e59d065b3/Output-Payload.wev" autogeneratedOrigin="0a072725-4780-4404-8fd4-2b55580a6ef8"><![CDATA[%dw 2.0
-
-type auto_180eb009_6971_49d1_9824_717e59d065b3_Output_Payload = {
-  entry?: Array<{    extension?: Array<anonymousType_1> {"description": "Additional Content defined by implementations - from Element: extension (recursive)\n"}, 
-    id?: String, 
-    _?: Any
-  }>, 
-  identifier?: {
-    period?: anonymousType_1, 
-    system?: String, 
-    use?: "secondary" | "temp" | "usual" | "old" | "official", 
-    assigner?: anonymousType_1, 
-    "type"?: anonymousType_1, 
-    value?: String, 
-    _?: Any
-  } {"description": "Persistent identifier for the bundle"}, 
-  total?: Number, 
-  signature?: {
-    data?: String, 
-    onBehalfOf?: anonymousType_1, 
-    sigFormat?: String, 
-    targetFormat?: String, 
-    "type": Array<{      extension?: Array<anonymousType_1> {"description": "Additional Content defined by implementations - from Element: extension (recursive)\n"}, 
-      system?: String, 
-      code?: String, 
-      userSelected?: Boolean, 
-      display?: String, 
-      id?: String, 
-      version?: String, 
-      _?: Any
-    } {"description": "A Coding is a representation of a defined concept using a symbol from a defined \"code system\".\nSee http://hl7.org/fhir/STU3/terminologies.html for more details.\n"}> {"description": "Indication of the reason the entity signed the object(s)"}, 
-    when: String, 
-    who?: anonymousType_1, 
-    _?: Any
-  } {"description": "Digital Signature"}, 
-  meta?: anonymousType_1, 
-  link?: Array<anonymousType_1> {"description": "Links related to this Bundle"}, 
-  implicitRules?: String, 
-  language?: String, 
-  id?: String, 
-  "type": "batch-response" | "document" | "searchset" | "batch" | "transaction-response" | "history" | "collection" | "message" | "transaction", 
-  timestamp?: String, 
-  _?: Any
-} {"description": "Contains a collection of resources\n+ Rule: total only when a search or history\n+ Rule: entry.search only when a search\n+ Rule: entry.request mandatory for batch/transaction/history, otherwise prohibited\n+ Rule: entry.response mandatory for batch-response/transaction-response/history, otherwise prohibited\n+ Rule: FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)\n+ Rule: A document must have an identifier with a system and a value\n+ Rule: A document must have a date\n+ Rule: A document must have a Composition as the first resource\n+ Rule: A message must have a MessageHeader as the first resource\nElements defined in Ancestors: id, meta, implicitRules, language\n"}
-type anonymousType_1 = {
-  extension?: Array<anonymousType_1> {"description": "Additional Content defined by implementations - from Element: extension (recursive)\n"}, 
-  id?: String, 
-  _?: Any
-}
-
-
-
-]]></types:shape>
-    </types:type>
-    <types:type name="auto_180eb009-6971-49d1-9824-717e59d065b3_Output-Attributes" format="java">
-      <types:shape format="weave" example="weave/autogenerated/180eb009-6971-49d1-9824-717e59d065b3/Output-Attributes.wev" autogeneratedOrigin="0a072725-4780-4404-8fd4-2b55580a6ef8"><![CDATA[%dw 2.0
-
-type auto_180eb009_6971_49d1_9824_717e59d065b3_Output_Attributes = Null
-
-]]></types:shape>
-    </types:type>
-    <types:type name="auto_180eb009-6971-49d1-9824-717e59d065b3_Output-Variables-outboundHeaders" format="java">
-      <types:shape format="weave" example="weave/autogenerated/180eb009-6971-49d1-9824-717e59d065b3/Output-Variables-outboundHeaders.wev" autogeneratedOrigin="0a072725-4780-4404-8fd4-2b55580a6ef8"><![CDATA[%dw 2.0
-
-type auto_180eb009_6971_49d1_9824_717e59d065b3_Output_Variables_outboundHeaders = {|  |}
-
-]]></types:shape>
-    </types:type>
-    <types:type name="auto_180eb009-6971-49d1-9824-717e59d065b3_Output-Variables-httpStatus" format="java">
-      <types:shape format="raml" autogeneratedOrigin="0a072725-4780-4404-8fd4-2b55580a6ef8"><![CDATA[#%RAML 1.0 DataType
+    <types:type name="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Output-Variables-httpStatus" format="java">
+      <types:shape format="raml" autogeneratedOrigin="fb7f068e-59c6-4863-80d8-430ac6342a2d"><![CDATA[#%RAML 1.0 DataType
 type: string]]></types:shape>
     </types:type>
   </types:catalog>
-  <types:enrichment select="#58bd61d5-9e3a-4f53-9e8e-400725b25998">
+  <types:enrichment select="#592f3d67-efe4-4e19-87d7-73f44cbc61d5">
     <types:processor-declaration>
       <types:input-event>
         <types:message>
-          <types:payload type="patient"/>
-        </types:message>
-      </types:input-event>
-    </types:processor-declaration>
-  </types:enrichment>
-  <types:enrichment select="#ec4b53dc-997c-4b02-8b9f-764b65c9074f">
-    <types:processor-declaration>
-      <types:input-event>
-        <types:message>
-          <types:payload type="patient"/>
-        </types:message>
-      </types:input-event>
-    </types:processor-declaration>
-  </types:enrichment>
-  <types:enrichment select="#2fec884f-662f-4b1e-96cd-600ef6462497">
-    <types:processor-declaration>
-      <types:input-event>
-        <types:message>
-          <types:payload type="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Input-Payload"/>
-          <types:attributes type="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Input-Attributes"/>
+          <types:payload type="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Input-Payload"/>
+          <types:attributes type="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Input-Attributes"/>
         </types:message>
         <types:variables>
-          <types:variable name="outboundHeaders" type="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Input-Variables-outboundHeaders"/>
-          <types:variable name="httpStatus" type="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Input-Variables-httpStatus"/>
+          <types:variable name="outboundHeaders" type="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Input-Variables-outboundHeaders"/>
+          <types:variable name="httpStatus" type="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Input-Variables-httpStatus"/>
         </types:variables>
       </types:input-event>
       <types:output-event>
         <types:message>
-          <types:payload type="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Output-Payload"/>
-          <types:attributes type="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Output-Attributes"/>
+          <types:payload type="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Output-Payload"/>
+          <types:attributes type="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Output-Attributes"/>
         </types:message>
         <types:variables>
-          <types:variable name="outboundHeaders" type="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Output-Variables-outboundHeaders"/>
-          <types:variable name="httpStatus" type="auto_2fec884f-662f-4b1e-96cd-600ef6462497_Output-Variables-httpStatus"/>
+          <types:variable name="outboundHeaders" type="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Output-Variables-outboundHeaders"/>
+          <types:variable name="httpStatus" type="auto_592f3d67-efe4-4e19-87d7-73f44cbc61d5_Output-Variables-httpStatus"/>
         </types:variables>
       </types:output-event>
     </types:processor-declaration>
   </types:enrichment>
-  <types:enrichment select="#180eb009-6971-49d1-9824-717e59d065b3">
+  <types:enrichment select="#d977ad5a-5588-4d0f-b7ba-6710585f8114">
     <types:processor-declaration>
       <types:input-event>
         <types:message>
-          <types:payload type="auto_180eb009-6971-49d1-9824-717e59d065b3_Input-Payload"/>
-          <types:attributes type="auto_180eb009-6971-49d1-9824-717e59d065b3_Input-Attributes"/>
+          <types:payload type="input[]"/>
         </types:message>
-        <types:variables>
-          <types:variable name="outboundHeaders" type="auto_180eb009-6971-49d1-9824-717e59d065b3_Input-Variables-outboundHeaders"/>
-          <types:variable name="httpStatus" type="auto_180eb009-6971-49d1-9824-717e59d065b3_Input-Variables-httpStatus"/>
-        </types:variables>
       </types:input-event>
-      <types:output-event>
-        <types:message>
-          <types:payload type="auto_180eb009-6971-49d1-9824-717e59d065b3_Output-Payload"/>
-          <types:attributes type="auto_180eb009-6971-49d1-9824-717e59d065b3_Output-Attributes"/>
-        </types:message>
-        <types:variables>
-          <types:variable name="outboundHeaders" type="auto_180eb009-6971-49d1-9824-717e59d065b3_Output-Variables-outboundHeaders"/>
-          <types:variable name="httpStatus" type="auto_180eb009-6971-49d1-9824-717e59d065b3_Output-Variables-httpStatus"/>
-        </types:variables>
-      </types:output-event>
     </types:processor-declaration>
   </types:enrichment>
 </types:mule>
